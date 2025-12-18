@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Canteen • Orders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body onload="initializeOrdersPage()">
+    <header class="erp-topbar">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="nav-links d-flex flex-wrap align-items-center">
+                <a href="index.html" class="fw-semibold">Smart Canteen Portal</a>
+                <a href="slots.html">Slots</a>
+                <a href="menu.html">Menu</a>
+                <a href="orders.html">Orders</a>
+            </div>
+            <div class="nav-actions mt-3 mt-md-0">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-dot"></span>
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </div>
+                <div class="dropdown">
+                    <button class="profile-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar">HM</div>
+                        <div class="profile-meta">
+                            <span class="label">HEJASVINI M</span>
+                            <small>ID: 22IT1234</small>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="order-history.html">My Orders</a></li>
+                        <li><a class="dropdown-item" href="book-slot.html">My Slots</a></li>
+                        <li><a class="dropdown-item" href="index.html#orders">My Wallet</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="erp-page-wrapper">
+        <div class="container">
+            <section class="erp-shell hero-panel mb-4">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-7">
+                        <h1 class="hero-title">Track prep journey & QR pickups in realtime.</h1>
+                        <p class="erp-muted mb-4">Kitchen updates, QR verifications, and wallet debits sync live so you never wait clueless.</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary px-4"><i class="fas fa-qrcode me-2"></i>Show Latest QR</button>
+                            <button class="btn btn-outline-light text-dark px-4 border-0 bg-body-tertiary">Download Invoice</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="highlight-grid">
+                            <div>
+                                <span class="highlight-label">Active Orders</span>
+                                <h3 id="liveOrders">42</h3>
+                                <small class="text-success">Kitchen load healthy</small>
+                            </div>
+                            <div>
+                                <span class="highlight-label">Wallet Balance</span>
+                                <h3>₹<span id="walletBalance">320</span></h3>
+                                <small class="text-muted">Auto top-up enabled</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="erp-shell status-tracker h-100">
+                        <div class="section-heading mb-3">
+                            <h4 class="erp-page-title mb-1">Food Preparation Status</h4>
+                            <p class="erp-muted mb-2" id="currentOrderLabel">Live journey of Order #SCB1024.</p>
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                <span class="text-muted small me-2">Current stage:</span>
+                                <button type="button" class="btn btn-sm btn-outline-primary status-stage-pill" data-stage="cooking">Cooking</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary status-stage-pill" data-stage="packing">Packing</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary status-stage-pill" data-stage="ready">Ready</button>
+                            </div>
+                            <p class="status-meta mb-0"><strong>Estimated time:</strong> <span id="statusEta">--</span> • <strong>Items:</strong> <span id="statusItems">--</span></p>
+                        </div>
+                        <ul class="status-steps" id="statusSteps"></ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="erp-shell qr-wallet h-100">
+                        <div class="d-flex flex-column flex-md-row gap-4">
+                            <div class="flex-fill">
+                                <h5 class="fw-semibold mb-3">QR Pickup Pass</h5>
+                                <div class="erp-qr mb-3">
+                                    <i class="fas fa-qrcode fa-3x"></i>
+                                </div>
+                                <p class="mb-1 fw-semibold">Order #SCB1024</p>
+                                <p class="erp-muted">Scan at kiosk to mark as collected.</p>
+                            </div>
+                            <div class="flex-fill">
+                                <div class="wallet-card mb-3">
+                                    <p class="mb-1 text-uppercase small">Campus Wallet</p>
+                                    <h3>₹<span id="walletCardBalance">320.00</span></h3>
+                                    <p class="erp-muted mb-2">Last top-up: ₹200 via UPI</p>
+                                    <button class="btn btn-primary btn-sm px-3">Add Money</button>
+                                </div>
+                                <div class="wishlist-card">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0">Wishlist</h6>
+                                        <a href="#" class="text-decoration-none small">Manage</a>
+                                    </div>
+                                    <div class="wishlist-chips" id="wishlistChips"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="row g-4">
+                <div class="col-lg-6">
+                    <div class="erp-shell notifications h-100">
+                        <div class="section-heading mb-3">
+                            <h4 class="erp-page-title mb-1">Order Updates</h4>
+                            <p class="erp-muted mb-0">Real-time order status notifications</p>
+                        </div>
+                        <div id="notificationStream">
+                            <div class="notification-item order-update accepted">
+                                <div class="notification-icon">
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                <div class="notification-content flex-grow-1">
+                                    <h6 class="mb-1 fw-semibold">Your order is Accepted</h6>
+                                    <p class="mb-0 erp-muted small">Order #SCB1024 has been accepted and is being prepared</p>
+                                </div>
+                            </div>
+                            <div class="notification-item order-update ready">
+                                <div class="notification-icon">
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                <div class="notification-content flex-grow-1">
+                                    <h6 class="mb-1 fw-semibold">Your order is Ready for Pickup</h6>
+                                    <p class="mb-0 erp-muted small">Order #SCB1024 is ready. Please collect from Counter 3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="erp-shell admin-board h-100">
+                        <div class="section-heading mb-3">
+                            <h4 class="erp-page-title mb-1">Live Order Tracking (Admin)</h4>
+                            <p class="erp-muted mb-0">Accept • Prepare • Ready • Collected</p>
+                        </div>
+                        <div class="admin-orders" id="adminOrders"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        function initializeOrdersPage() {
+            wireStatusControls();
+            updateNotifications();
+        }
+    </script>
+    <style>
+        .status-stage-pill {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+        .status-stage-pill.active {
+            background: var(--erp-maroon);
+            color: #fff;
+            border-color: var(--erp-maroon);
+        }
+        .status-stage-pill.inactive {
+            background: #e9ecef;
+            color: #495057;
+        }
+        .status-meta {
+            font-size: 0.85rem;
+        }
+        .notification-item {
+            border: 1px solid var(--erp-border);
+            border-radius: 14px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background: #fff;
+            transition: all 0.2s ease;
+        }
+        .notification-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .order-update.accepted .notification-icon {
+            background: rgba(45, 156, 91, 0.1);
+        }
+        .order-update.ready .notification-icon {
+            background: rgba(123, 22, 49, 0.1);
+        }
+        .notification-content h6 {
+            color: var(--erp-maroon-dark);
+            font-size: 0.95rem;
+        }
+    </style>
+</body>
+</html>
+

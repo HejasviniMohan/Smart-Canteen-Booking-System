@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart – Smart Canteen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body onload="displayCart()">
+    <header class="erp-topbar">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="nav-links d-flex flex-wrap align-items-center">
+                <a href="dashboard.html" class="fw-semibold">Smart Canteen Portal</a>
+                <a href="menu.html">Menu</a>
+                <a href="book-slot.html">Book Slot</a>
+                <a href="order-history.html">Orders</a>
+            </div>
+            <div class="erp-profile-badge mt-3 mt-md-0">HEJASVINI M • 43110288</div>
+        </div>
+    </header>
+
+    <main class="container erp-page-wrapper">
+        <div class="row g-4">
+            <section class="col-12">
+                <div class="erp-shell">
+                    <h3 class="erp-page-title mb-3">Student Cart</h3>
+                    <p class="erp-muted mb-4">Review your selections before placing the order.</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle erp-table" id="cartTable">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Price (₹)</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mt-4 gap-3">
+                        <h5 class="mb-0">Total Amount: ₹<span id="totalAmount">0</span></h5>
+                        <button class="btn btn-primary px-4" onclick="placeOrder()">Place Order</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

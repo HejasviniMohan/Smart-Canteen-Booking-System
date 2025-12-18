@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Canteen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body onload="showUserDetails()">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <span class="navbar-brand">Smart Canteen</span>
+
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h3>Welcome, <span id="userName"></span></h3>
+
+    <div class="row mt-4">
+
+        <!-- Food Menu -->
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 text-center">
+                <h5>Browse Food Menu</h5>
+                <a href="menu.html" class="btn btn-primary mt-2">Open Menu</a>
+            </div>
+        </div>
+
+        <!-- Cart -->
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 text-center">
+                <h5>Your Cart</h5>
+                <a href="cart.html" class="btn btn-primary mt-2">View Cart</a>
+            </div>
+        </div>
+
+        <!-- Order History -->
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 text-center">
+                <h5>Order History</h5>
+                <a href="order-history.html" class="btn btn-primary mt-2">View Orders</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script src="js/script.js"></script>
+
+<script>
+    const user = localStorage.getItem("currentUser");
+    if (!user) {
+        window.location.href = "index.html";
+    }
+</script>
+
+
+</body>
+</html>
